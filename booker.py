@@ -12,5 +12,5 @@ from app.web import book
 if __name__ == '__main__':
     print('active: ' + str(id(app)))
     # prod using nginx + uwsgi
-    app.run(host='0.0.0.0', debug=app.config['DEBUG'], port=8080)
+    app.run(host='0.0.0.0', debug=app.config['DEBUG'], port=8080, threaded=True)
 
