@@ -1,3 +1,5 @@
+import json
+
 from flask import jsonify, request
 
 from app.spider.booker_book import BookerBook
@@ -41,10 +43,10 @@ def search():
             booker_book.search_by_isbn(q)
         else:
             booker_book.search_by_keyword(q, page)
-
-        #__dict__
         books.fill(booker_book, q)
-        return jsonify(books)
+        return json.dumps(books, default=lambda o: o.__dict__, ensure_ascii=False)
+        #__dict__
+        #return jsonify(books)
     else:
         return jsonify(form.errors)
 
