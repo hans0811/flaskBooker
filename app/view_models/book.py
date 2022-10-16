@@ -1,5 +1,3 @@
-
-
 class BookViewModel:
     def __init__(self, book):
         self.title = book['title']
@@ -12,6 +10,12 @@ class BookViewModel:
         self.pages = book['pages']
         self.pubdate = book['pubdate']
         self.binding = book['binding']
+
+    @property
+    def intro(self):
+        intros = filter(lambda x: True if x else False,
+                        [self.author, self.publisher, self.price])
+        return ' / '.join(intros)
 
 
 class BookCollection:
@@ -44,7 +48,7 @@ class _BookViewModel:
     @classmethod
     def package_collection(cls, data, keyword):
         returned = {
-            'books':[],
+            'books': [],
             'total': 0,
             'keyword': keyword
         }
@@ -66,3 +70,7 @@ class _BookViewModel:
 
         }
         return book
+
+    @property
+    def first(self):
+        return self.book[0] if self.total >= 1 else None

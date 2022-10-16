@@ -9,6 +9,9 @@ requests = "*"
 wtforms = "*"
 flask-sqlalchemy = "*"
 cymysql = "*"
+auth = "*"
+base = "*"
+email-validator = "*"
 
 [dev-packages]
 

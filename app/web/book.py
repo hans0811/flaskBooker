@@ -1,6 +1,6 @@
 import json
 
-from flask import jsonify, request
+from flask import jsonify, request, render_template, flash
 
 from app.spider.booker_book import BookerBook
 from app.libs.helper import is_isbn_or_key
@@ -10,6 +10,21 @@ from ..view_models.book import BookViewModel, BookCollection
 
 
 @web.route('/test')
+def test():
+    r = {
+        'name': '',
+        'age': 18
+    }
+
+    r1={
+
+    }
+    flash('Hello, Hans', category='error')
+    flash('Hello, This is Oct.', category='warning')
+    # Template
+    return render_template('test.html', data=r, data1=r1)
+
+@web.route('/test1')
 def test1():
     from app.libs.none_local import n
     print(n.v)
@@ -32,7 +47,7 @@ def search():
     form = SearchForm(request.args)
     books = BookCollection()
 
-    # validation layer
+    ## validation layer
     if form.validate():
         q = form.q.data.strip() # delete space
         page = form.page.data
@@ -44,10 +59,20 @@ def search():
         else:
             booker_book.search_by_keyword(q, page)
         books.fill(booker_book, q)
-        return json.dumps(books, default=lambda o: o.__dict__, ensure_ascii=False)
+
+        #return json.dumps(books, default=lambda o: o.__dict__, ensure_ascii=False)
         #__dict__
         #return jsonify(books)
     else:
-        return jsonify(form.errors)
+        flash('Please input again')
+        #return jsonify(form.errors)
 
+    return render_template('search_result.html', books=books)
     #return json.dumps(result), 200, {'content-type': 'application/json'}
+
+@web.route('/book/<isbn>/detail')
+def book_detail(isbn):
+    booker_book = BookerBook()
+    booker_book.search_by_isbn(isbn)
+    book = BookViewModel(booker_book.first)
+    return render_template('book_detail.html', book=book, wishes=[], gifts=[])
