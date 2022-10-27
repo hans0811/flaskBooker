@@ -12,6 +12,7 @@ cymysql = "*"
 auth = "*"
 base = "*"
 email-validator = "*"
+flask-login = "*"
 
 [dev-packages]
 

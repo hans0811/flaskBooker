@@ -1,14 +1,16 @@
-from sqlalchemy import Column, Integer, String
+
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Column, Integer, String
+
+from app.models.base import db, Base
+
 
 # sqlalchemy
-# Flask SQLAlchemy
+# Flask SQLAlchemyg
 # Flask_WTFORMS
 
-db = SQLAlchemy()
 
-
-class Book(db.Model):
+class Book(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String(50), nullable=False)
     author = Column(String(30), default='')
@@ -21,5 +23,4 @@ class Book(db.Model):
     summary = Column(String(1000))
     image = Column(String(50))
 
-    def sample(self):
-        pass
+
